@@ -3,8 +3,6 @@ package com.mycompany.p1.entity;
 import java.time.LocalDateTime;
 import java.util.List;
 
-import org.springframework.data.annotation.CreatedDate;
-
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -34,7 +32,6 @@ public class Question {
 	@Column(columnDefinition = "TEXT") // 글자 제한이 없음
 	private String content;
 	
-	@CreatedDate
 	private LocalDateTime createDate;
 	
 	// 1:N(질문:답변) 관계, mappedBy : 참조 엔티티의 속성명을 정의, 질문글이 삭제되면 답변글도 삭제되게 해주는 옵션
