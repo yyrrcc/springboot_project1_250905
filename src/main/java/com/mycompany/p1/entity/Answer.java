@@ -8,6 +8,8 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.SequenceGenerator;
+import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -18,16 +20,23 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
+@Table(name = "answer")
+@SequenceGenerator(
+		name = "ANSWER_SEQ_GENERATOR",
+		sequenceName = "ANSWER_SEQ",
+		initialValue = 1,
+		allocationSize = 1
+		)
 public class Answer {
 	
     @Id 
-    @GeneratedValue(strategy = GenerationType.IDENTITY) 
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "ANSWER_SEQ_GENERATOR") 
     private Integer id; 
 
-    @Column(columnDefinition = "TEXT") 
+    @Column(length = 500) 
     private String content; 
 
-    private LocalDateTime createDate; 
+    private LocalDateTime createdate; 
 
 	
 	// N:1(답변:질문) 관계
