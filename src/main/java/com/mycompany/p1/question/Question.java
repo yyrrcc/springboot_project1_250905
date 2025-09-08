@@ -1,7 +1,9 @@
-package com.mycompany.p1.entity;
+package com.mycompany.p1.question;
 
 import java.time.LocalDateTime;
 import java.util.List;
+
+import com.mycompany.p1.answer.Answer;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;

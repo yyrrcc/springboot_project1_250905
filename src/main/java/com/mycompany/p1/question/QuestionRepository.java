@@ -1,11 +1,9 @@
-package com.mycompany.p1.repository;
+package com.mycompany.p1.question;
 
 import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
-
-import com.mycompany.p1.entity.Question;
 
 @Repository
 public interface QuestionRepository extends JpaRepository<Question, Integer> {
