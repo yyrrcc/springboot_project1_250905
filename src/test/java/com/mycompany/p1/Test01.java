@@ -67,10 +67,30 @@ public class Test01 {
 	
 	
 	@Test
-	@DisplayName("질문 제목으로 테스트")
+	@DisplayName("질문 제목으로 조회")
 	void testJpa4() {
 		Question question = questionRepository.findBySubject("sbb가 무엇인가요?");
 		assertEquals(1, question.getId());
+	}
+	
+	
+	
+	@Test
+	@DisplayName("질문 제목과 내용으로 조회")
+	void testJpa5() {
+		Question question = questionRepository.findBySubjectAndContent("sbb가 무엇인가요?", "sbb에 대해 알고 싶습니다.");
+		assertEquals(1, question.getId());
+	}
+	
+	
+	
+	
+	@Test
+	@DisplayName("특정 문자열을 포함한 제목 찾기")
+	void testJpa6() {
+		List<Question> questionList = questionRepository.findBySubjectLike("sbb%");
+		Question question = questionList.get(0); // 첫번째 레코드 가져오기
+		assertEquals("sbb가 무엇인가요?", question.getSubject());
 	}
 
 }
