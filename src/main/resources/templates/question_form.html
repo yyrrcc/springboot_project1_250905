@@ -1,14 +1,21 @@
 <html layout:decorate="~{layout}">
 <div layout:fragment="content" class="container">
     <h5 class="my-3 border-bottom pb-2">질문등록</h5>
-    <form th:action="@{/question/create}" method="post">
+    <!-- th:object : 스프링 mvc가 자동으로 questionForm 객체를 생성해줌 -->
+    <form th:action="@{/question/create}" th:object="${questionForm}" method="post">
+    	<!-- 경고 메시지. 만약 #fields.hasAnyErrors() 있으면 실행 -->
+    	<div class="alert alert-danger" role="alert" th:if="${#fields.hasAnyErrors()}">
+    		<div th:each="err : ${#fields.allErrors()}" th:text="${err}">에러 원인</div>
+    	</div>
+    	
         <div class="mb-3">
+        	<!-- 타임리프 문법 field : id, name, value 3가지 역할을 함 -->
             <label for="subject" class="form-label">제목</label>
-            <input type="text" name="subject" id="subject" class="form-control">
+            <input type="text" th:field="*{subject}" class="form-control">
         </div>
         <div class="mb-3">
             <label for="content" class="form-label">내용</label>
-            <textarea name="content" id="content" class="form-control" rows="10"></textarea>
+            <textarea th:field="*{content}" class="form-control" rows="10"></textarea>
         </div>
         <input type="submit" value="저장하기" class="btn btn-primary my-2">
     </form>
