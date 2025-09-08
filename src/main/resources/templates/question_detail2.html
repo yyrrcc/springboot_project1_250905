@@ -1,5 +1,13 @@
-<html layout:decorate="~{layout}">
-<div layout:fragment="content" class="container my-3">
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<link rel="stylesheet" type="text/css" th:href="@{/bootstrap.min.css}">
+<title>세부사항</title>
+</head>
+<body>
+
+<div class="container my-3">
     <!-- 질문 -->
 	<h2 class="border-bottom py-2" th:text="${question.subject}">제목</h2>
 	
@@ -34,5 +42,7 @@
 		<textarea rows="15" cols="40" name="content" id="content" class="form-control"></textarea>
 		<input type="submit" value="답변 등록" class="btn btn-primary my-2">
 	</form>
+	
 </div>	
+</body>
 </html>

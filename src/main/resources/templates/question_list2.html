@@ -1,5 +1,12 @@
-<html layout:decorate="~{layout}">
-<div layout:fragment="content" class="container my-3">
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"> <!-- thymeleaf 선언 -->
+<head>
+<meta charset="UTF-8">
+<link rel="stylesheet" type="text/css" th:href="@{/bootstrap.min.css}">
+<title>타임리프</title>
+</head>
+<body>
+<div class="container my-3">
 	<table class="table">
 	    <thead class="table-dark">
 	        <tr>
@@ -20,4 +27,5 @@
 	    </tbody>
 	</table>
 </div>	
+</body>
 </html>
