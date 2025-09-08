@@ -1,5 +1,6 @@
 package com.mycompany.p1.question;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -30,5 +31,15 @@ public class QuestionService {
 		}
 	}
 	
+	// 질문 등록
+	public void create(String subject, String content) {
+		Question question = new Question();
+		question.setSubject(subject);
+		question.setContent(content);
+		question.setCreatedate(LocalDateTime.now());
+		questionRepository.save(question);
+	}
+	
 
 }
+ 
