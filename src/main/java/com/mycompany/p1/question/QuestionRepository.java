@@ -2,6 +2,8 @@ package com.mycompany.p1.question;
 
 import java.util.List;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -16,5 +18,8 @@ public interface QuestionRepository extends JpaRepository<Question, Integer> {
 	
 	// 특정 문자열을 포함한 데이터 찾기
 	public List<Question> findBySubjectLike(String subject);
+	
+	// 페이징 관련 메서드 (jpa 관련 라이브러리에 이미 페이징 관련된 것들이 포함 되어 있음)
+	//public Page<Question> findAll(Pageable pageable);
 
 }
