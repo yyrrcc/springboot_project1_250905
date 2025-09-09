@@ -3,6 +3,7 @@ package com.mycompany.p1.answer;
 import java.time.LocalDateTime;
 
 import com.mycompany.p1.question.Question;
+import com.mycompany.p1.user.SiteUser;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -44,6 +45,10 @@ public class Answer {
 	// N:1(답변:질문) 관계
     @ManyToOne
     private Question question;
+    
+    // N:1(답변:작성자) 관계
+    @ManyToOne
+    private SiteUser author;
     
 
 }

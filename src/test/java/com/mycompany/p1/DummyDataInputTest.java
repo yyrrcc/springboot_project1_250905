@@ -20,7 +20,7 @@ public class DummyDataInputTest {
 			// 십진수 d를 찍고 03은 3자리를 채워라
 			String subject = String.format("테스트 데이터입니다:[%03d]", i);
 			String content = "연습 더미 데이터";
-			questionService.create(subject, content);	
+			questionService.create(subject, content, null);	
 		}
 		
 	}

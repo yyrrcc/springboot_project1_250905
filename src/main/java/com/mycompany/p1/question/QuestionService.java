@@ -10,6 +10,8 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import com.mycompany.p1.user.SiteUser;
+
 @Service
 public class QuestionService {
 	
@@ -41,11 +43,12 @@ public class QuestionService {
 	}
 	
 	// 질문 등록
-	public void create(String subject, String content) {
+	public void create(String subject, String content, SiteUser user) {
 		Question question = new Question();
 		question.setSubject(subject);
 		question.setContent(content);
 		question.setCreatedate(LocalDateTime.now());
+		question.setAuthor(user);
 		questionRepository.save(question);
 	}
 	

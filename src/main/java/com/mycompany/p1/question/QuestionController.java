@@ -1,9 +1,11 @@
 package com.mycompany.p1.question;
 
+import java.security.Principal;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -14,6 +16,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.mycompany.p1.answer.AnswerForm;
+import com.mycompany.p1.user.SiteUser;
+import com.mycompany.p1.user.UserService;
 
 import jakarta.validation.Valid;
 
@@ -25,6 +29,8 @@ public class QuestionController {
 //    private QuestionRepository questionRepository;
 	@Autowired
 	private QuestionService questionService;
+	@Autowired
+	private UserService userService;
 	
 	@GetMapping (value = "/")
 	public String root() {
@@ -58,6 +64,7 @@ public class QuestionController {
 		return "question_detail";
 	}
 	
+	@PreAuthorize("isAuthenticated()") // principal null값 오류를 잡아주기 위해. 로그인한 경우에만 실행할 수 있게.
     @GetMapping("/create")
     // 유효성 검증 추가로 인해 매개변수 questionForm를 받았다
     public String questionCreate(QuestionForm questionForm) {
@@ -72,15 +79,18 @@ public class QuestionController {
 //		return "redirect:/question/list";
 //	}
 	
+    @PreAuthorize("isAuthenticated()") // principal null값 오류를 잡아주기 위해. 로그인한 경우에만 실행할 수 있게.
 	@PostMapping (value = "/create")
 	// @Valid 유효성 체크를 하기 위해 적어주기. 에러가 존재한다면 폼으로 돌아가게 처리. 매개변수를 클래스로 받았음.
-	public String questionCreate(@Valid QuestionForm questionForm, BindingResult result) {
+	public String questionCreate(@Valid QuestionForm questionForm, BindingResult result, Principal principal) {
 		
 		// bind : 묶는다는 뜻. 에러가 있으면 모델로 굳이 안 보내줘도 매개변수와 에러 모두 포함해서 넘겨줌
 		if (result.hasErrors()) { 
 			return "question_form";
 		}
-		questionService.create(questionForm.getSubject(), questionForm.getContent());
+		// pricipal에 저장된 로그인한 아이디를 가져와서 유저 정보 저장
+		SiteUser siteUser = userService.getUser(principal.getName());
+		questionService.create(questionForm.getSubject(), questionForm.getContent(), siteUser);
 		return "redirect:/question/list";
 	}
 	

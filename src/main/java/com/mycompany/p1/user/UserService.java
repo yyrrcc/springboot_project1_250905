@@ -1,9 +1,12 @@
 package com.mycompany.p1.user;
 
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+
+import com.mycompany.p1.question.DataNotFoundException;
 
 @Service
 public class UserService {
@@ -26,7 +29,19 @@ public class UserService {
 		user.setEmail(email);
 		userRepository.save(user);
 		return user;
-		
 	}
+	
+	
+	// 유저 아이디로 유저 정보(엔티티) 가져오기
+	public SiteUser getUser(String username) {
+		Optional<SiteUser> optional = userRepository.findByUsername(username);
+		if (optional.isPresent()) {
+			SiteUser siteUser = optional.get();
+			return siteUser;
+		} else {
+			throw new DataNotFoundException("해당 유저를 찾을 수 없습니다.");
+		}
+	}
+	
 
 }
