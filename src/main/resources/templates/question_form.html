@@ -3,10 +3,12 @@
     <h5 class="my-3 border-bottom pb-2">질문등록</h5>
     <!-- th:object : 스프링 mvc가 자동으로 questionForm 객체를 생성해줌 -->
     <form th:action="@{/question/create}" th:object="${questionForm}" method="post">
-    	<!-- 경고 메시지. 만약 #fields.hasAnyErrors() 있으면 실행 -->
+    	<!-- 중복 코드 제거를 위해 공통 템플릿 사용 -->
+    	<div th:replace="~{form_errors :: formErrorsFragment}"></div>
+    	<!-- 경고 메시지. 만약 #fields.hasAnyErrors() 있으면 실행 
     	<div class="alert alert-danger" role="alert" th:if="${#fields.hasAnyErrors()}">
     		<div th:each="err : ${#fields.allErrors()}" th:text="${err}">에러 원인</div>
-    	</div>
+    	</div> -->
     	
         <div class="mb-3">
         	<!-- 타임리프 문법 field : id, name, value 3가지 역할을 함 -->

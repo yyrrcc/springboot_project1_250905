@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.mycompany.p1.answer.AnswerForm;
+
 import jakarta.validation.Valid;
 
 @Controller
@@ -37,7 +39,7 @@ public class QuestionController {
 	}
 	
 	@GetMapping (value = "/detail/{id}") // 파라미터 이름 없이 값만 받아온다
-	public String detail(Model model, @PathVariable("id") Integer id) {
+	public String detail(Model model, @PathVariable("id") Integer id, AnswerForm answerForm) {
 		Question question = questionService.getQuestion(id);
 		model.addAttribute("question", question);
 		return "question_detail";
@@ -60,7 +62,9 @@ public class QuestionController {
 	@PostMapping (value = "/create")
 	// @Valid 유효성 체크를 하기 위해 적어주기. 에러가 존재한다면 폼으로 돌아가게 처리. 매개변수를 클래스로 받았음.
 	public String questionCreate(@Valid QuestionForm questionForm, BindingResult result) {
-		if (result.hasErrors()) {
+		
+		// bind : 묶는다는 뜻. 에러가 있으면 모델로 굳이 안 보내줘도 매개변수와 에러 모두 포함해서 넘겨줌
+		if (result.hasErrors()) { 
 			return "question_form";
 		}
 		questionService.create(questionForm.getSubject(), questionForm.getContent());
