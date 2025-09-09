@@ -48,4 +48,16 @@ public class UserController {
 	}
 	
 	
+	
+	// 로그인 폼
+	@GetMapping(value = "/login")
+	public String login() {
+		return "login_form";
+	}
+	@PostMapping(value = "/login")
+	public String login(String username, String password) {
+		return "login_form";
+	}
+	
+	
 }
