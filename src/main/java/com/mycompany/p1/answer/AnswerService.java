@@ -57,4 +57,12 @@ public class AnswerService {
 	public void delete(Answer answer) {
 		answerRepository.delete(answer);
 	}
+	
+	
+	// 답변 추천
+	public void vote(Answer answer, SiteUser siteUser) {
+		answer.getVoter().add(siteUser); // 답변글의 voter를 가져와서 siteUser 엔티티에 값을 추가
+		answerRepository.save(answer); // 변경된 answer 다시 저장
+	}
+	
 }

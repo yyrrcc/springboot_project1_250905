@@ -2,6 +2,7 @@ package com.mycompany.p1.question;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Set;
 
 import com.mycompany.p1.answer.Answer;
 import com.mycompany.p1.user.SiteUser;
@@ -12,6 +13,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.SequenceGenerator;
@@ -47,15 +49,19 @@ public class Question {
 	
 	private LocalDateTime createdate;
 	
-	// 1:N(질문:답변) 관계, mappedBy : 참조 엔티티의 속성명을 정의, 질문글이 삭제되면 답변글도 삭제되게 해주는 옵션
+	// 질문:답변(1:N) 관계, mappedBy : 참조 엔티티의 속성명을 정의, 질문글이 삭제되면 답변글도 삭제되게 해주는 옵션
     @OneToMany (mappedBy = "question", cascade = CascadeType.REMOVE)
     private List<Answer> answerList;
     
-    // N:1(질문:작성자) 관계
+    // 질문:작성자(N:1) 관계
     @ManyToOne
     private SiteUser author;
     
     // 수정날짜
     private LocalDateTime modifydate;
+    
+    // 질문:추천자(N:N) 관계, 중복 허용(List), 순서 상관없고 중복 안 됨(Set)은 결국 유저의 수 = 추천 수
+    @ManyToMany
+    private Set<SiteUser> voter;
 
 }

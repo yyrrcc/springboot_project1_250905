@@ -106,6 +106,20 @@ public class AnswerController {
     	answerService.delete(answer);
     	return String.format("redirect:/question/detail/%s", answer.getQuestion().getId());
     }
+    
+    
+    
+    // 답변 추천
+    @PreAuthorize("isAuthenticated()")
+    @GetMapping (value = "/vote/{id}")
+    public String recommend(@PathVariable("id") Integer id, Principal principal) {
+    	// 기본키로 Answer 가져오고 principal에 회원 정보 가져오기
+    	Answer answer = answerService.getAnswer(id);
+    	SiteUser siteUser = userService.getUser(principal.getName());
+    	answerService.vote(answer, siteUser);
+    	// 답변이 달린 질문글로 이동
+    	return String.format("redirect:/question/detail/%s", answer.getQuestion().getId());
+    }
 
     
 	

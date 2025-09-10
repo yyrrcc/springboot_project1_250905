@@ -3,6 +3,7 @@ package com.mycompany.p1.question;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -67,6 +68,12 @@ public class QuestionService {
 		questionRepository.delete(question);
 	}
 	
+	
+	// 질문 추천 (update문)
+	public void vote(Question question, SiteUser siteUser) {
+		question.getVoter().add(siteUser); // 질문글의 voter를 가져와서 siteUser 엔티티에 값을 추가
+		questionRepository.save(question); // 변경된 question 다시 저장
+	}
 
 }
  
