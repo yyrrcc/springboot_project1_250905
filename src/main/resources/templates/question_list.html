@@ -6,6 +6,7 @@
 	        	<th>번호</th>
 	            <th style="width:50%">제목</th>
 	            <th>글쓴이</th>
+	            <th>조회수</th>
 	            <th>작성일시</th>
 	        </tr>
 	    </thead>
@@ -19,6 +20,7 @@
 	            <!-- <td th:text="${question.subject}">제목을 가져옵니다.</td> -->
 	            <!-- 글쓴이 추가 -->
 	            <td><span th:if="${question.author != null}" th:text="${question.author.username}"></span></td>
+	            <td th:text=${question.hit}></td>
 	            <td th:text="${#temporals.format(question.createdate, 'yyyy-MM-dd HH:mm')}">글 작성 시간을 가져옵니다.</td>
 	        </tr>
 	    </tbody>

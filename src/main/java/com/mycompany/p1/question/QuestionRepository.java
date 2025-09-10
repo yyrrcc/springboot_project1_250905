@@ -21,5 +21,6 @@ public interface QuestionRepository extends JpaRepository<Question, Integer> {
 	
 	// 페이징 관련 메서드 (jpa 관련 라이브러리에 이미 페이징 관련된 것들이 포함 되어 있음)
 	//public Page<Question> findAll(Pageable pageable);
-
+	
+	
 }

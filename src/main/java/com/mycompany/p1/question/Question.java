@@ -63,5 +63,8 @@ public class Question {
     // 질문:추천자(N:N) 관계, 중복 허용(List), 순서 상관없고 중복 안 됨(Set)은 결국 유저의 수 = 추천 수
     @ManyToMany
     private Set<SiteUser> voter;
+    
+    // 조회수
+    private Integer hit = 0;
 
 }

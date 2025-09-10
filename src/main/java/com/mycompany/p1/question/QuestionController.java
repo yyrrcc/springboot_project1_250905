@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
@@ -21,6 +22,7 @@ import com.mycompany.p1.answer.AnswerForm;
 import com.mycompany.p1.user.SiteUser;
 import com.mycompany.p1.user.UserService;
 
+import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 
 @Controller
@@ -59,8 +61,10 @@ public class QuestionController {
 //		return "question_list";
 //	}
 	
+
 	@GetMapping (value = "/detail/{id}") // 파라미터 이름 없이 값만 받아온다
 	public String detail(Model model, @PathVariable("id") Integer id, AnswerForm answerForm) {
+		questionService.hit(questionService.getQuestion(id)); // 조회수 증가
 		Question question = questionService.getQuestion(id);
 		model.addAttribute("question", question);
 		return "question_detail";
@@ -151,6 +155,7 @@ public class QuestionController {
     	questionService.vote(question, siteUser);
     	return String.format("redirect:/question/detail/%s", id);
     }
-	
+    
+    
 	
 }

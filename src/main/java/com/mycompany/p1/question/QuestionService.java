@@ -75,5 +75,12 @@ public class QuestionService {
 		questionRepository.save(question); // 변경된 question 다시 저장
 	}
 
+	
+	// 질문 조회수 증가
+	public void hit(Question question) {
+		question.setHit(question.getHit() + 1);
+		questionRepository.save(question);
+	}
+	
 }
  
