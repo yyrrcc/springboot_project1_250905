@@ -7,8 +7,14 @@
         	<div class="card-body">
 				<div class="card-text" style="white-space: pre-line;" th:text="${question.content}">내용</div>
 					<div class="d-flex justify-content-end">
+						<!-- 질문 수정일자 -->
+						<div th:if="${question.modifydate != null}" class="badge bg-light text-dark p-2 text-start mx-3">
+			                <div class="mb-2">수정된 일자</div>
+			                <div th:text="${#temporals.format(question.modifydate, 'yyyy-MM-dd HH:mm')}"></div>
+			            </div>
+			            
+			            <!-- 글쓴이, 질문 등록일자 -->
                 		<div class="badge bg-light text-dark p-2 text-start">
-                			<!-- 글쓴이 표시 -->
                 			<div class="mb-2">
                     			<span th:if="${question.author != null}" th:text="${question.author.username}"></span>
                 			</div>
@@ -38,8 +44,13 @@
 		<div class="card-body">
             <div class="card-text" style="white-space: pre-line;" th:text="${answer.content}"></div>
 	            <div class="d-flex justify-content-end">
+	            	<!-- 답변 수정일자 -->
+	            	<div th:if="${answer.modifydate != null}" class="badge bg-light text-dark p-2 text-start mx-3">
+		                <div class="mb-2">수정된 일자</div>
+		                <div th:text="${#temporals.format(answer.modifydate, 'yyyy-MM-dd HH:mm')}"></div>
+		            </div>
+		            <!-- 답변 작성자 및 답변 등록일자 -->
 	                <div class="badge bg-light text-dark p-2 text-start">
-	                	<!-- 작성자 표시 -->
 	                	<div class="mb-2">
                     		<span th:if="${answer.author != null}" th:text="${answer.author.username}"></span>
                 		</div>
