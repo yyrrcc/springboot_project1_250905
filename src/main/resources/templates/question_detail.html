@@ -27,6 +27,10 @@
 		       		<a href="javascript:void(0);" class="recommend btn btn-sm btn-outline-secondary" 
 		                th:data-uri="@{|/question/vote/${question.id}|}">추천
 		                <span class="badge rounded-pill bg-success" th:text="${#lists.size(question.voter)}"></span></a>
+		       		<!-- 질문 비추천 버튼 -->
+		       		<a href="javascript:void(0);" class="dislike btn btn-sm btn-outline-secondary" 
+		                th:data-uri="@{|/question/dislike/${question.id}|}">비추
+		                <span class="badge rounded-pill bg-success" th:text="${#lists.size(question.dislikeusers)}"></span></a>
 		       		<!-- 질문 수정 버튼 (#authentication.getPrincipal()은 타임리프에서 스프링 시큐리티와 함께 사용하는 표현식) -->
 		            <a th:href="@{|/question/modify/${question.id}|}" class="btn btn-sm btn-outline-secondary"
 		                sec:authorize="isAuthenticated()"
@@ -68,6 +72,12 @@
 		       		<a href="javascript:void(0);" class="recommend btn btn-sm btn-outline-secondary" 
 		                th:data-uri="@{|/answer/vote/${answer.id}|}">추천
 		                <span class="badge rounded-pill bg-success" th:text="${#lists.size(answer.voter)}"></span></a>
+	            	<!-- 답변 비추천 버튼 -->
+		       		<a href="javascript:void(0);" class="dislike btn btn-sm btn-outline-secondary" 
+		                th:data-uri="@{|/answer/dislike/${answer.id}|}">비추
+		                <span class="badge rounded-pill bg-success" th:text="${#lists.size(answer.dislikeusers)}"></span></a>
+	            	
+	            	<!-- 답변 수정 버튼 -->
 	            	<a th:href="@{|/answer/modify/${answer.id}|}" class="btn btn-sm btn-outline-secondary"
 		                sec:authorize="isAuthenticated()"
 		                th:if="${answer.author != null and #authentication.getPrincipal().getUsername() == answer.author.username}"
@@ -114,6 +124,15 @@ const recommend_elements = document.getElementsByClassName("recommend");
 Array.from(recommend_elements).forEach(function(element) {
     element.addEventListener('click', function() {
         if(confirm("정말로 추천하시겠습니까?")) {
+            location.href = this.dataset.uri;
+        };
+    });
+});
+//비추천
+const dislike_elements = document.getElementsByClassName("dislike");
+Array.from(dislike_elements).forEach(function(element) {
+    element.addEventListener('click', function() {
+        if(confirm("정말로 비추하시겠습니까?")) {
             location.href = this.dataset.uri;
         };
     });

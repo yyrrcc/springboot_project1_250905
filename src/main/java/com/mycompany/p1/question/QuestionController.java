@@ -156,6 +156,16 @@ public class QuestionController {
     	return String.format("redirect:/question/detail/%s", id);
     }
     
+    // 글 비추
+    @PreAuthorize("isAuthenticated()")
+    @GetMapping (value = "/dislike/{id}")
+    public String dislike(@PathVariable("id") Integer id, Principal principal) {
+    	Question question = questionService.getQuestion(id);
+    	SiteUser siteUser = userService.getUser(principal.getName());
+    	questionService.dislike(question, siteUser);
+    	return String.format("redirect:/question/detail/%s", id);
+    }
+    
     
 	
 }

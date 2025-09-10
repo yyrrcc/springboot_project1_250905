@@ -64,6 +64,10 @@ public class Question {
     @ManyToMany
     private Set<SiteUser> voter;
     
+    // 질문:비추천자(N:N) 관계
+    @ManyToMany
+    private Set<SiteUser> dislikeusers;    
+    
     // 조회수
     private Integer hit = 0;
 

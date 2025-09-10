@@ -74,6 +74,12 @@ public class QuestionService {
 		question.getVoter().add(siteUser); // 질문글의 voter를 가져와서 siteUser 엔티티에 값을 추가
 		questionRepository.save(question); // 변경된 question 다시 저장
 	}
+	
+	// 질문 비추
+	public void dislike(Question question, SiteUser siteUser) {
+		question.getDislikeusers().add(siteUser);
+		questionRepository.save(question);
+	}
 
 	
 	// 질문 조회수 증가

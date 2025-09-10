@@ -58,4 +58,8 @@ public class Answer {
     // 답변:추천자(N:N) 관계, 중복 안 됨(Set)은 결국 유저의 수 = 추천 수
     @ManyToMany
     private Set<SiteUser> voter;
+    
+    // 질문:비추천자(N:N) 관계
+    @ManyToMany
+    private Set<SiteUser> dislikeusers;
 }

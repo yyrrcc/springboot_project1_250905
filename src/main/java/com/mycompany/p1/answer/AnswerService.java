@@ -65,4 +65,10 @@ public class AnswerService {
 		answerRepository.save(answer); // 변경된 answer 다시 저장
 	}
 	
+	// 답변 비추
+	public void dislike(Answer answer, SiteUser siteUser) {
+		answer.getDislikeusers().add(siteUser);
+		answerRepository.save(answer);
+	}
+	
 }

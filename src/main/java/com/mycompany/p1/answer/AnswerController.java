@@ -120,6 +120,17 @@ public class AnswerController {
     	// 답변이 달린 질문글로 이동
     	return String.format("redirect:/question/detail/%s", answer.getQuestion().getId());
     }
+    // 답변 비추
+    @PreAuthorize("isAuthenticated()")
+    @GetMapping (value = "/dislike/{id}")
+    public String dislike(@PathVariable("id") Integer id, Principal principal) {
+    	// 기본키로 Answer 가져오고 principal에 회원 정보 가져오기
+    	Answer answer = answerService.getAnswer(id);
+    	SiteUser siteUser = userService.getUser(principal.getName());
+    	answerService.dislike(answer, siteUser);
+    	// 답변이 달린 질문글로 이동
+    	return String.format("redirect:/question/detail/%s", answer.getQuestion().getId());
+    }
 
     
 	
