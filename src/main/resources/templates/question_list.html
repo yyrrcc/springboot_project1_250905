@@ -16,7 +16,13 @@
 	        	<td th:text="${loop.count}"></td>
 	        	<!-- 파라미터 이름 없이 값만 넘기기 -->
 	        	<td class="text-start">
-	        		<a th:href="@{|/question/detail/${question.id}|}" th:text="${question.subject}">제목을 가져옵니다.</a></td>
+	        		<a th:href="@{|/question/detail/${question.id}|}" th:text="${question.subject}">제목을 가져옵니다.</a>
+	        		<!-- 제목 옆에 답변 개수 (#list.size(객체)는 객체의 사이즈를 리턴하는 타임리프의 기능) -->
+	        		<span class="text-danger small ms-2"
+                        th:if="${#lists.size(question.answerList) > 0}" 
+                        th:text="'[' + ${#lists.size(question.answerList)} + ']'">
+                    </span>
+	        		</td>
 	            <!-- <td th:text="${question.subject}">제목을 가져옵니다.</td> -->
 	            <!-- 글쓴이 추가 -->
 	            <td><span th:if="${question.author != null}" th:text="${question.author.username}"></span></td>
