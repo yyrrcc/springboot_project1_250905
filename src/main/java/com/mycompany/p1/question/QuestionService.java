@@ -31,7 +31,7 @@ public class QuestionService {
 //		return questionRepository.findAll(pageable);
 //	}
 	
-	// 질문 제목 클릭 시 내용 확인
+	// 기본키를 통해서 질문 1개 가져오기
 	public Question getQuestion(Integer id) {
 		Optional<Question> optional = questionRepository.findById(id);
 		if (optional.isPresent()) {
@@ -50,6 +50,21 @@ public class QuestionService {
 		question.setCreatedate(LocalDateTime.now());
 		question.setAuthor(user);
 		questionRepository.save(question);
+	}
+	
+	
+	
+	// 질문 수정하기 (변경된 제목과 내용, 그리고 엔티티 Question을 매개변수로 받아야 함)
+	public void modify(Question question, String subject, String content) {
+		question.setSubject(subject);
+		question.setContent(content);
+		question.setModifydate(LocalDateTime.now());
+		questionRepository.save(question);
+	}
+	
+	// 질문 삭제하기
+	public void delete(Question question) {
+		questionRepository.delete(question);
 	}
 	
 

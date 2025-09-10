@@ -2,7 +2,11 @@
 <div layout:fragment="content" class="container">
     <h5 class="my-3 border-bottom pb-2">질문등록</h5>
     <!-- th:object : 스프링 mvc가 자동으로 questionForm 객체를 생성해줌 -->
-    <form th:action="@{/question/create}" th:object="${questionForm}" method="post">
+    <!-- <form th:action="@{/question/create}" th:object="${questionForm}" method="post"> -->
+    <!-- 글 수정을 하기 위해 action에 create는 없애야 함. 근데 action이 없다면 url 안 바뀜! -->
+    <form th:object="${questionForm}" method="post">
+    <!-- form th:action 없으면 CSRF값을 수동으로 추가 해줘야함 -->
+    <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
     	<!-- 중복 코드 제거를 위해 공통 템플릿 사용 -->
     	<div th:replace="~{form_errors :: formErrorsFragment}"></div>
     	<!-- 경고 메시지. 만약 #fields.hasAnyErrors() 있으면 실행 

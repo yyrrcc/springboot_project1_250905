@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.server.ResponseStatusException;
 
 import com.mycompany.p1.answer.AnswerForm;
 import com.mycompany.p1.user.SiteUser;
@@ -93,6 +95,51 @@ public class QuestionController {
 		questionService.create(questionForm.getSubject(), questionForm.getContent(), siteUser);
 		return "redirect:/question/list";
 	}
+    
+    
+    // 질문 수정 버튼 눌렀을 때 폼 띄우기
+    @GetMapping (value = "/modify/{id}")
+    @PreAuthorize("isAuthenticated()") // 로그인 안하면 수정 못하게 또 막기
+    public String questionModify(QuestionForm questionForm, @PathVariable("id") Integer id, Principal principal) {
+    	Question question = questionService.getQuestion(id); // 수정하려는 글 내용 가져오기
+    	if(!question.getAuthor().getUsername().equals(principal.getName())) { // 수정권한 확인하기
+    		throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "수정권한이 없습니다.");
+    	}
+    	questionForm.setSubject(question.getSubject()); // 수정버튼 눌렀을 때 글 내용 보이게 question.get
+    	questionForm.setContent(question.getContent()); // 그 다음 수정한 글들은 questionForm.set으로 저장
+    	return "question_form";
+    }
+    
+    
+    
+    // 글 수정
+    @PostMapping (value = "/modify/{id}")
+    @PreAuthorize("isAuthenticated()")
+    public String questionModify(@PathVariable("id") Integer id, @Valid QuestionForm questionForm,
+    		BindingResult result, Principal principal) {
+    	if (result.hasErrors()) {
+    		return "question_form";
+    	}
+    	Question question = questionService.getQuestion(id);
+    	if (!question.getAuthor().getUsername().equals(principal.getName())) {
+    		throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "수정권한이 없습니다.");
+    	}
+    	questionService.modify(question, questionForm.getSubject(), questionForm.getContent());
+    	return String.format("redirect:/question/detail/%s", id);
+    }
+    
+    
+    // 글 삭제
+    @GetMapping (value = "/delete/{id}")
+    @PreAuthorize("isAuthenticated()")
+    public String questionDelete(@PathVariable("id") Integer id, Principal principal) {
+    	Question question = questionService.getQuestion(id);
+    	if (!question.getAuthor().getUsername().equals(principal.getName())) {
+    		throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "삭제권한이 없습니다.");
+    	}
+    	questionService.delete(question);
+    	return "redirect:/question/list";
+    }
 	
 	
 }
