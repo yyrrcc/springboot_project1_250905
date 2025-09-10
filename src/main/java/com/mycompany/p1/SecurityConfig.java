@@ -34,7 +34,8 @@ public class SecurityConfig {
 		.logout((logout) -> logout
 				.logoutRequestMatcher(new AntPathRequestMatcher("/user/logout")) // 로그아웃 요청
                 .logoutSuccessUrl("/") // 로그아웃 성공 시 이동 할 페이지
-                .invalidateHttpSession(true)) // 사용자 세션 삭제
+                .invalidateHttpSession(true) // 사용자 세션 삭제
+				.deleteCookies("JSESSIONID")) // 쿠키 삭제 추가 옵션 (필요하면)
 		;
 		return http.build();
 	}
@@ -45,9 +46,7 @@ public class SecurityConfig {
     PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
-	
-	
-	
+
 	
 	
 	@Bean
@@ -56,5 +55,27 @@ public class SecurityConfig {
 	(AuthenticationConfiguration authenticationConfiguration) throws Exception {
 		return authenticationConfiguration.getAuthenticationManager();
 	}
+	
+	
+	
+	
+//    @Bean
+//    SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+//        http
+//            .authorizeHttpRequests(authorize -> authorize
+//                .requestMatchers("/**").permitAll()
+//            )
+//            .formLogin(form -> form
+//                .loginPage("/user/login")
+//                .defaultSuccessUrl("/", true)
+//            )
+//            .logout(logout -> logout
+//                .logoutUrl("/user/logout")
+//                .logoutSuccessUrl("/")
+//                .invalidateHttpSession(true)
+//            );
+//        return http.build();
+//    }
+
 	
 }
