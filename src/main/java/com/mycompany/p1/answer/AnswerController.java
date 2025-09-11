@@ -52,9 +52,9 @@ public class AnswerController {
 			model.addAttribute("question", question); // question을 모델에 넣어 보내줘야 함
 			return "question_detail";
 		}
-		answerService.create(question, answerForm.getContent(), siteUser); // 답변 등록
+		Answer answer = answerService.create(question, answerForm.getContent(), siteUser); // 답변 등록 -> 반환타입으로 변경
 		
-		return String.format("redirect:/question/detail/%s", id);
+		return String.format("redirect:/question/detail/%s#answer_%s", id, answer.getId()); // 앵커 기능 추가 및 답변 id값 가져오기
 	}
     
     

@@ -25,13 +25,14 @@ public class AnswerService {
 	
 	
 	// 답변 저장하기 (질문글 번호, 답변내용)
-	public void create(Question question, String content, SiteUser author) {
+	public Answer create(Question question, String content, SiteUser author) {
 		Answer answer = new Answer();
 		answer.setQuestion(question);
 		answer.setContent(content);
 		answer.setCreatedate(LocalDateTime.now());
 		answer.setAuthor(author); // 글쓴이 추가
 		answerRepository.save(answer);
+		return answer; // 반환타입을 만들어줌
 	}
 	
 	
