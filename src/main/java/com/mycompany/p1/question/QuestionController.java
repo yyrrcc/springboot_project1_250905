@@ -55,10 +55,13 @@ public class QuestionController {
 	// 글 목록 가져오기 + 페이징 
 	@GetMapping (value = "/list")
 	// 파라미터 값으로 page 받고, 기본값(defaultValue)은 0으로 초기화
-	public String list(Model model, @RequestParam (value = "page", defaultValue = "0") int page) {
+	public String list(Model model, @RequestParam (value = "page", defaultValue = "0") int page,
+			@RequestParam(value = "kw", defaultValue = "") String kw) {
 		int pageSize = 10;
-		Page<Question> paging = questionService.getPageQuestions(page); // n페이지당 10개의 글 리스트
+//		Page<Question> paging = questionService.getPageQuestions(page); // n페이지당 10개의 글 리스트
+		Page<Question> paging = questionService.getPageQuestions(page, kw);
 		model.addAttribute("paging", paging);
+		model.addAttribute("kw", kw);
 		return "question_list";
 	}
 	
