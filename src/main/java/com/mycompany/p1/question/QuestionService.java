@@ -7,6 +7,7 @@ import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -26,11 +27,16 @@ public class QuestionService {
 		return questionRepository.findAll();
 	}
 	// 모든 질문글 가져오기 + 페이징
-//	public Page<Question> getList(int page) {
-//		// 매개변수 page (유저가 누른 페이지 넘버) 받아오고, 1페이지 당 보여질 게시글의 수
-//		Pageable pageable = PageRequest.of(page, 10);
-//		return questionRepository.findAll(pageable);
-//	}
+	public Page<Question> getPageQuestions(int page) {
+		int size = 10; // 1페이지당 10페이지
+		int startRow = page * size;  // 1페이지가 0으로 들어오게 해야 nativeQuery에서 제대로 쓸 수 있음 (startRow 초과로 되어 있어서)
+		int endRow = startRow + size;
+		List<Question> pageQuestionList = questionRepository.findAllWithPaging(startRow, endRow);
+		long totalQuestion = questionRepository.count(); // 모든 글 개수 가져오기
+		// 제공해주는 Page 이용해서 타입 변경, 구현체 이용
+		Page<Question> pagingList = new PageImpl<>(pageQuestionList, PageRequest.of(page, size), totalQuestion);
+		return pagingList;
+	}
 	
 	// 기본키를 통해서 질문 1개 가져오기
 	public Question getQuestion(Integer id) {

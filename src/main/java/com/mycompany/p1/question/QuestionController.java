@@ -41,25 +41,26 @@ public class QuestionController {
 		return "redirect:/question/list";
 	}
 
-	
-	@GetMapping (value = "/list")
-	// 파라미터 값으로 page 받고, 기본값(defaultValue)은 0으로 초기화
-	public String list(Model model) {
-		//List<Question> questions = questionRepository.findAll();
-		List<Question> questions = questionService.getList();
-		model.addAttribute("questions", questions);
-		return "question_list";
-	}
-	
-	
-	// 페이징 
-//	@GetMapping (value = "/list")
+	// 글 목록 가져오기
+//	@GetMapping (value = "/list2")
 //	// 파라미터 값으로 page 받고, 기본값(defaultValue)은 0으로 초기화
-//	public String list(Model model, @RequestParam (value = "page", defaultValue = "0") int page) {
-//		Page<Question> paging = questionService.getList(page); // n페이지당 10개의 글 리스트
-//		model.addAttribute("paging", paging);
+//	public String list2(Model model) {
+//		//List<Question> questions = questionRepository.findAll();
+//		List<Question> questions = questionService.getList();
+//		model.addAttribute("questions", questions);
 //		return "question_list";
 //	}
+	
+	
+	// 글 목록 가져오기 + 페이징 
+	@GetMapping (value = "/list")
+	// 파라미터 값으로 page 받고, 기본값(defaultValue)은 0으로 초기화
+	public String list(Model model, @RequestParam (value = "page", defaultValue = "0") int page) {
+		int pageSize = 10;
+		Page<Question> paging = questionService.getPageQuestions(page); // n페이지당 10개의 글 리스트
+		model.addAttribute("paging", paging);
+		return "question_list";
+	}
 	
 
 	@GetMapping (value = "/detail/{id}") // 파라미터 이름 없이 값만 받아온다
