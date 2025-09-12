@@ -1,11 +1,9 @@
 package com.mycompany.p1.question;
 
 import java.security.Principal;
-import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
-import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
@@ -22,7 +20,6 @@ import com.mycompany.p1.answer.AnswerForm;
 import com.mycompany.p1.user.SiteUser;
 import com.mycompany.p1.user.UserService;
 
-import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 
 @Controller
